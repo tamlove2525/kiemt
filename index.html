@@ -120,9 +120,9 @@
   <script>
     let vocabList = [];
 
-    // Hàm kiểm tra chỉ cho phép ký tự tiếng Anh
-    function isEnglish(text) {
-      return /^[A-Za-z\s]+$/.test(text);
+    // Hàm kiểm tra cho phép các ký tự: chữ, số, khoảng trắng và các ký tự đặc biệt: :, ,, \", ', ., /, ;, !, ?, -
+    function isValidInput(text) {
+      return /^[A-Za-z0-9\s:,\"'.\/;!?-]+$/.test(text);
     }
 
     // Tạo dòng từ vựng mới
@@ -139,7 +139,7 @@
       });
       container.appendChild(deleteBtn);
 
-      // Thêm sự kiện xóa khi nhấn Delete trong bất kỳ input nào của container
+      // Sự kiện xóa khi nhấn Delete trong bất kỳ input nào của dòng này
       container.addEventListener('keydown', function(event) {
         if(event.key === "Delete") {
           container.remove();
@@ -191,7 +191,7 @@
       inputEnglish.placeholder = "Nhập từ tiếng Anh";
       inputEnglish.value = englishValue;
       inputEnglish.addEventListener('input', function(){
-        if(inputEnglish.value !== "" && !isEnglish(inputEnglish.value)){
+        if(inputEnglish.value !== "" && !isValidInput(inputEnglish.value)) {
           inputEnglish.classList.add("error");
         } else {
           inputEnglish.classList.remove("error");
@@ -251,7 +251,7 @@
         const inputEnglish = rowDiv.children[0];
         const inputVietnamese = rowDiv.children[1];
 
-        if(inputEnglish.value.trim() === "" || !isEnglish(inputEnglish.value.trim())){
+        if(inputEnglish.value.trim() === "" || !isValidInput(inputEnglish.value.trim())){
           inputEnglish.classList.add("error");
           valid = false;
         }
